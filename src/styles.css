@@ -125,7 +125,8 @@
   }
 
   .card-warm-hover {
-    @apply card-warm transition-all duration-300;
+    @apply rounded-2xl bg-card border border-border p-6 md:p-8 transition-all duration-300;
+    box-shadow: var(--shadow-card);
   }
 
   .card-warm-hover:hover {
