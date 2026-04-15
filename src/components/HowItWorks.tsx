@@ -38,9 +38,7 @@ export default function HowItWorks() {
             <div key={s.step} className="step-card flex-1 flex flex-col md:flex-row items-center gap-4">
               <div className="card-warm-hover flex-1 text-center w-full">
                 <span className="text-5xl font-bold text-primary/15 font-heading">{s.step}</span>
-                <div className="w-14 h-14 rounded-2xl bg-primary/10 flex items-center justify-center mx-auto my-4">
-                  <s.icon className="w-7 h-7 text-primary" />
-                </div>
+              
                 <h3 className="text-xl font-bold text-foreground mb-2 font-heading">{s.title}</h3>
                 <p className="text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
               </div>

@@ -73,9 +73,7 @@ export default function Blog() {
               </div>
               <h3 className="text-lg font-bold text-foreground mb-2 font-heading group-hover:text-primary transition-colors">{p.title}</h3>
               <p className="text-sm text-muted-foreground leading-relaxed mb-4">{p.excerpt}</p>
-              <span className="text-sm font-semibold text-primary flex items-center gap-1 group-hover:gap-2 transition-all">
-                Read More <ArrowRight className="w-4 h-4" />
-              </span>
+            
             </div>
           ))}
         </div>

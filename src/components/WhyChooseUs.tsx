@@ -1,13 +1,13 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Target, Sparkles, TrendingUp, Shield } from "lucide-react";
+import { Target, Layers, TrendingUp, Shield } from "lucide-react";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const reasons = [
   { icon: Target, title: "Built for Food Courts", desc: "Not a generic solution. Our platform is purpose-built for multi-vendor food environments." },
-  { icon: Sparkles, title: "Intuitive Interface", desc: "Clean, easy-to-use design that vendors and managers can learn in minutes, not days." },
+  { icon: Layers, title: "Intuitive Interface", desc: "Clean, easy-to-use design that vendors and managers can learn in minutes, not days." },
   { icon: TrendingUp, title: "Scalable Architecture", desc: "Whether you have 5 vendors or 50, our system grows seamlessly with your business." },
   { icon: Shield, title: "Reliable Performance", desc: "99.9% uptime, lightning-fast operations, and robust data security you can count on." },
 ];

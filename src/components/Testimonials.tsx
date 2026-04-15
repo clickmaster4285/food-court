@@ -28,8 +28,10 @@ const testimonials = [
 
 export default function Testimonials() {
   const [current, setCurrent] = useState(0);
+  const [isAutoPlaying, setIsAutoPlaying] = useState(true);
   const ref = useRef<HTMLElement>(null);
   const cardRef = useRef<HTMLDivElement>(null);
+  const autoPlayRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -38,7 +40,32 @@ export default function Testimonials() {
     return () => ctx.revert();
   }, []);
 
+  // Auto-slide effect
+  useEffect(() => {
+    if (isAutoPlaying) {
+      autoPlayRef.current = setInterval(() => {
+        navigate(1);
+      }, 5000);
+    }
+
+    return () => {
+      if (autoPlayRef.current) {
+        clearInterval(autoPlayRef.current);
+      }
+    };
+  }, [isAutoPlaying, current]);
+
   const navigate = (dir: number) => {
+    // Reset auto-play timer when manually navigating
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+      if (isAutoPlaying) {
+        autoPlayRef.current = setInterval(() => {
+          navigate(1);
+        }, 5000);
+      }
+    }
+
     gsap.to(cardRef.current, {
       opacity: 0,
       x: dir * -30,
@@ -50,10 +77,51 @@ export default function Testimonials() {
     });
   };
 
+  const goToSlide = (index: number) => {
+    if (index === current) return;
+    
+    // Reset auto-play timer
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+      if (isAutoPlaying) {
+        autoPlayRef.current = setInterval(() => {
+          navigate(1);
+        }, 5000);
+      }
+    }
+
+    const dir = index > current ? 1 : -1;
+    gsap.to(cardRef.current, {
+      opacity: 0,
+      x: dir * -30,
+      duration: 0.25,
+      onComplete: () => {
+        setCurrent(index);
+        gsap.fromTo(cardRef.current, { opacity: 0, x: dir * 30 }, { opacity: 1, x: 0, duration: 0.35 });
+      },
+    });
+  };
+
+  const pauseAutoPlay = () => {
+    setIsAutoPlaying(false);
+    if (autoPlayRef.current) {
+      clearInterval(autoPlayRef.current);
+    }
+  };
+
+  const resumeAutoPlay = () => {
+    setIsAutoPlaying(true);
+  };
+
   const t = testimonials[current];
 
   return (
-    <section ref={ref} className="section-padding">
+    <section 
+      ref={ref} 
+      className="section-padding"
+      onMouseEnter={pauseAutoPlay}
+      onMouseLeave={resumeAutoPlay}
+    >
       <div className="section-container">
         <div className="text-center mb-16 testimonial-section">
           <span className="section-label">Testimonials</span>
@@ -76,15 +144,25 @@ export default function Testimonials() {
           </div>
 
           <div className="flex items-center justify-center gap-4 mt-8">
-            <button onClick={() => navigate(-1)} className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors">
+            <button 
+              onClick={() => navigate(-1)} 
+              className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors"
+            >
               <ChevronLeft className="w-5 h-5 text-foreground" />
             </button>
             <div className="flex gap-2">
               {testimonials.map((_, i) => (
-                <span key={i} className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-primary w-6" : "bg-muted-foreground/30"}`} />
+                <button
+                  key={i}
+                  onClick={() => goToSlide(i)}
+                  className={`w-2 h-2 rounded-full transition-all ${i === current ? "bg-primary w-6" : "bg-muted-foreground/30"}`}
+                />
               ))}
             </div>
-            <button onClick={() => navigate(1)} className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors">
+            <button 
+              onClick={() => navigate(1)} 
+              className="w-10 h-10 rounded-full bg-muted flex items-center justify-center hover:bg-primary/10 transition-colors"
+            >
               <ChevronRight className="w-5 h-5 text-foreground" />
             </button>
           </div>
