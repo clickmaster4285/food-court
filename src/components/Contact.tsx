@@ -78,7 +78,7 @@ export default function Contact() {
         <div className="text-center mb-16">
           <span className="contact-content text-sm uppercase tracking-widest text-primary font-bold">Contact Us</span>
           <h2 className="contact-content text-3xl md:text-5xl font-bold font-[var(--font-heading)] text-foreground mt-4">
-            Ready to <span className="text-gradient-primary">Transform</span> Your Ice Cream Shop?
+            Ready to <span className="text-gradient-primary">Transform</span> Your Buisness?
           </h2>
           <p className="contact-content text-lg text-muted-foreground max-w-2xl mx-auto mt-4">
             Get in touch and let's discuss how we can streamline your operations.
@@ -216,7 +216,7 @@ export default function Contact() {
                   value={form.message}
                   onChange={(e) => setForm({ ...form, message: e.target.value })}
                   className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 transition resize-none"
-                  placeholder="Tell us about your ice cream shop..."
+                  placeholder="Tell us about your buisness..."
                 />
               </div>
 
